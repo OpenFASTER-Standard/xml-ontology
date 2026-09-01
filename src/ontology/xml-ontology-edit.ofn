@@ -1,0 +1,75 @@
+Prefix(:=<https://purl.openfaster.org/xmlo/>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+Prefix(dc:=<http://purl.org/dc/elements/1.1/>)
+Prefix(dcterms:=<http://purl.org/dc/terms/>)
+Prefix(xmlo:=<https://purl.openfaster.org/xmlo/>)
+
+Ontology(<https://purl.openfaster.org/xmlo/xml-ontology.owl>
+Annotation(dc:title "XML Ontology"@en)
+Annotation(dc:description "An OWL vocabulary for a concrete XML document instance's actual structure -- real elements in real document order, real attributes, real text content -- as opposed to XSD's grammar of what's allowed (see xsd-ontology for that). Novel territory: no confirmed existing prior art was found to adopt instead, but none was confirmed absent either -- see the design doc for the research."@en)
+Annotation(dcterms:license <https://creativecommons.org/licenses/by/4.0/>)
+
+Declaration(Class(xmlo:Document))
+AnnotationAssertion(rdfs:label xmlo:Document "Document"@en)
+AnnotationAssertion(rdfs:comment xmlo:Document "A single concrete XML document instance."@en)
+
+Declaration(Class(xmlo:Element))
+AnnotationAssertion(rdfs:label xmlo:Element "Element"@en)
+AnnotationAssertion(rdfs:comment xmlo:Element "A real element instance within a concrete document, as opposed to xsdo:ElementDeclaration, which describes what elements a schema allows."@en)
+
+Declaration(Class(xmlo:Attribute))
+AnnotationAssertion(rdfs:label xmlo:Attribute "Attribute"@en)
+AnnotationAssertion(rdfs:comment xmlo:Attribute "A real attribute instance on an Element."@en)
+
+Declaration(ObjectProperty(xmlo:rootElement))
+AnnotationAssertion(rdfs:label xmlo:rootElement "root element"@en)
+ObjectPropertyDomain(xmlo:rootElement xmlo:Document)
+ObjectPropertyRange(xmlo:rootElement xmlo:Element)
+
+Declaration(DataProperty(xmlo:elementName))
+AnnotationAssertion(rdfs:label xmlo:elementName "element name"@en)
+DataPropertyDomain(xmlo:elementName xmlo:Element)
+DataPropertyRange(xmlo:elementName xsd:string)
+
+Declaration(DataProperty(xmlo:namespaceURI))
+AnnotationAssertion(rdfs:label xmlo:namespaceURI "namespace URI"@en)
+DataPropertyDomain(xmlo:namespaceURI xmlo:Element)
+DataPropertyRange(xmlo:namespaceURI xsd:anyURI)
+
+Declaration(ObjectProperty(xmlo:hasChildElement))
+AnnotationAssertion(rdfs:label xmlo:hasChildElement "has child element"@en)
+ObjectPropertyDomain(xmlo:hasChildElement xmlo:Element)
+ObjectPropertyRange(xmlo:hasChildElement xmlo:Element)
+
+Declaration(DataProperty(xmlo:childPosition))
+AnnotationAssertion(rdfs:label xmlo:childPosition "child position"@en)
+AnnotationAssertion(rdfs:comment xmlo:childPosition "1-based position among an Element's children, in real document order. Same explicit-position convention as xsdo:particlePosition/sso:sheetPosition -- reasoned by analogy for the concrete-instance case, not independently re-verified (see design doc)."@en)
+DataPropertyDomain(xmlo:childPosition xmlo:Element)
+DataPropertyRange(xmlo:childPosition xsd:positiveInteger)
+
+Declaration(ObjectProperty(xmlo:hasAttribute))
+AnnotationAssertion(rdfs:label xmlo:hasAttribute "has attribute"@en)
+ObjectPropertyDomain(xmlo:hasAttribute xmlo:Element)
+ObjectPropertyRange(xmlo:hasAttribute xmlo:Attribute)
+
+Declaration(DataProperty(xmlo:textContent))
+AnnotationAssertion(rdfs:label xmlo:textContent "text content"@en)
+AnnotationAssertion(rdfs:comment xmlo:textContent "Optional. The element's simple text value, for leaf/simple-content elements. Not used for elements with child elements -- nothing in mikadiv-vib/kafe mixes text and child elements in the same element."@en)
+DataPropertyDomain(xmlo:textContent xmlo:Element)
+DataPropertyRange(xmlo:textContent xsd:string)
+
+Declaration(DataProperty(xmlo:attributeName))
+AnnotationAssertion(rdfs:label xmlo:attributeName "attribute name"@en)
+DataPropertyDomain(xmlo:attributeName xmlo:Attribute)
+DataPropertyRange(xmlo:attributeName xsd:string)
+
+Declaration(DataProperty(xmlo:attributeValue))
+AnnotationAssertion(rdfs:label xmlo:attributeValue "attribute value"@en)
+DataPropertyDomain(xmlo:attributeValue xmlo:Attribute)
+DataPropertyRange(xmlo:attributeValue xsd:string)
+
+)
